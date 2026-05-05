@@ -17,7 +17,7 @@ struct CoffeeBeanListRow: View {
             Spacer()
             beanCost
         }
-        .padding(.horizontal, 10)
+        .padding(.horizontal, 16)
     }
 }
 
