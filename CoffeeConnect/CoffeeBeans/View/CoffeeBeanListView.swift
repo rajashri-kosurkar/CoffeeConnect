@@ -25,11 +25,31 @@ struct CoffeeBeanListView: View {
                     .buttonStyle(.plain)
                     Divider().padding(.leading, 85)
                 }
+                .toolbar {
+                    ToolbarItem {
+                        toggleButton
+                    }
+                }
                 .navigationTitle("All The Beans")
             }
         }
         .task {
             await viewModel.loadBeans()
+        }
+        
+    }
+}
+
+extension CoffeeBeanListView {
+    
+    // MARK: Subviews
+    
+    private var toggleButton: some View {
+        Button {
+            viewModel.toggleLayout()
+        } label: {
+            Image(systemName: viewModel.layoutStyle == .list ? LayoutStyle.grid.toolBarImage : LayoutStyle.list.toolBarImage)
+                .imageScale(.large)
         }
         
     }

@@ -7,6 +7,20 @@
 
 import Foundation
 
+enum LayoutStyle {
+    case list
+    case grid
+    
+    var toolBarImage : String {
+        switch self {
+        case .list:
+            return "list.bullet"
+        case .grid:
+            return "square.grid.2x2"
+        }
+    }
+}
+
 @Observable
 final class CoffeeBeanListViewModel {
     
@@ -14,17 +28,20 @@ final class CoffeeBeanListViewModel {
     var isLoading: Bool = false
     var errorMessage: String? = nil
     
+    var layoutStyle: LayoutStyle = .list
+    
     // MARK: Dependencies
-
+    
     private let beanService: BeanServiceProtocol
-
+    
     // MARK: Init
-
+    
     init(beanService: BeanServiceProtocol = LocalBeanService()) {
         self.beanService = beanService
     }
+    
     // MARK: Actions
-
+    
     func loadBeans() async {
         isLoading = true
         errorMessage = nil
@@ -35,5 +52,9 @@ final class CoffeeBeanListViewModel {
         }
         isLoading = false
     }
-
+    
+    func toggleLayout() {
+        layoutStyle = (layoutStyle == .list) ? .grid : .list
+    }
+    
 }
