@@ -12,7 +12,18 @@ struct CoffeeConnectContentView: View {
     @State var coffeeBeanListViewModel: CoffeeBeanListViewModel = CoffeeBeanListViewModel()
     
     var body: some View {
-        CoffeeBeanListView(viewModel: coffeeBeanListViewModel)
+        
+        TabView {
+            CoffeeBeanListView(viewModel: coffeeBeanListViewModel)
+                .tabItem {
+                    Label("Beans", systemImage: "cup.and.saucer.fill")
+                }
+            
+            Text("Bean of the day View")
+                .tabItem {
+                    Label("Bean of the Day", systemImage: "star.fill")
+                }
+        }
     }
 }
 
