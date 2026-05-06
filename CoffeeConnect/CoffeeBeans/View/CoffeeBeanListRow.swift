@@ -32,7 +32,7 @@ extension CoffeeBeanListRow {
                 .resizable()
                 .scaledToFill()
         } placeholder: {
-            Color.brown.opacity(0.8)
+            Color.brown.opacity(0.2)
         }
         .frame(width: 64, height: 64)
         .clipShape(RoundedRectangle(cornerRadius: 10))

@@ -19,7 +19,7 @@ struct CoffeeConnectContentView: View {
                     Label("Beans", systemImage: "cup.and.saucer.fill")
                 }
             
-            Text("Bean of the day View")
+            BeanOfTheDayView(coffeeBean:CoffeeBean.dummy)
                 .tabItem {
                     Label("Bean of the Day", systemImage: "star.fill")
                 }

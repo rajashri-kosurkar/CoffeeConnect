@@ -16,7 +16,7 @@ struct CoffeeBeanListView: View {
         NavigationStack {
             ScrollView {
                 ForEach(viewModel.coffeeBeans) { bean in
-                    //                    CoffeeBeanListRow(coffeeBean: bean)
+                  
                     NavigationLink {
                         CoffeeBeanDetailView(coffeeBean: bean)
                     } label: {
