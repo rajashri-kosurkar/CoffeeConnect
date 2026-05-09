@@ -28,7 +28,10 @@ extension OrderFormView {
 
         private var formView: some View {
             Form {
-                Text(orderFormViewModel.coffeeBean.name)
+                
+                // Coffee Bean Summary
+                OrderSummaryRowView(coffeeBean: orderFormViewModel.coffeeBean)
+                
                 // Quantity Detail
                 Section("Quantity Detail") {
                     Stepper("Quantity: \(orderFormViewModel.quantity)", value: $orderFormViewModel.quantity, in: 1...99)
