@@ -42,7 +42,11 @@ struct CoffeeBean: Identifiable, Codable {
            case country = "Country"
        }
        
-       static var dummy : CoffeeBean {
+    var costValue: Double? {
+        return Double(cost.replacingOccurrences(of: "£", with: ""))
+    }
+    
+    static var dummy : CoffeeBean {
            return CoffeeBean(id:"66a374596122a40616cb8599",
                              index: 0,
                              isBOTD: true,

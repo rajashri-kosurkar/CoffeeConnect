@@ -10,7 +10,8 @@ import SwiftUI
 struct CoffeeBeanDetailView: View {
     
     let coffeeBean: CoffeeBean
-
+    @State private var showOrderForm = false
+    
     var body: some View {
         ScrollView {
             VStack {
@@ -21,9 +22,13 @@ struct CoffeeBeanDetailView: View {
                     detailSection
                     Divider()
                     descriptionSection
+                    ordenNowButton
                 }
                 .padding(20)
             }
+        }
+        .sheet(isPresented: $showOrderForm) {
+            OrderFormView(orderFormViewModel: OrderFormViewModel(coffeeBean: coffeeBean))
         }
         .navigationTitle(coffeeBean.name)
         .navigationBarTitleDisplayMode(.inline)
@@ -33,7 +38,7 @@ struct CoffeeBeanDetailView: View {
 extension CoffeeBeanDetailView {
     
     // MARK: Subviews
-
+    
     private var beanBackgroundImage: some View {
         AsyncImage(url: URL(string: coffeeBean.imageURL)) { image in
             image
@@ -91,7 +96,18 @@ extension CoffeeBeanDetailView {
                 .font(.body)
                 .foregroundStyle(.secondary)
         }
-       
+        
+    }
+    private var ordenNowButton:some View {
+        Button {
+            showOrderForm = true
+        } label: {
+            Label("Orden Now", systemImage: "cart.fill")
+                .frame(maxWidth: .infinity)
+                .frame(height: 55)
+                .font(.headline.bold())
+        }
+        .buttonStyle(.borderedProminent)
     }
 }
 
