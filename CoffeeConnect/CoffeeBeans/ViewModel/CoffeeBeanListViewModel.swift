@@ -25,9 +25,8 @@ enum LayoutStyle {
 final class CoffeeBeanListViewModel {
     
     var coffeeBeans: [CoffeeBean] = []
-    var isLoading: Bool = false
-    var errorMessage: String? = nil
-    
+    var isLoading: Bool = true
+    var errorMessage: String? = "Failed to load the coffee beans data."
     var layoutStyle: LayoutStyle = .list
     
     // MARK: Dependencies

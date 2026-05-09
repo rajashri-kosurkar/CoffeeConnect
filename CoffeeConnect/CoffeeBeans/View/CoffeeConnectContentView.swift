@@ -9,15 +9,16 @@ import SwiftUI
 
 struct CoffeeConnectContentView: View {
     
-    @State var coffeeBeanListViewModel: CoffeeBeanListViewModel = CoffeeBeanListViewModel()
+    @State private var coffeeBeanListViewModel: CoffeeBeanListViewModel = CoffeeBeanListViewModel()
     
     var body: some View {
         
         TabView {
-            CoffeeBeanListView(viewModel: coffeeBeanListViewModel)
+            CoffeeBeanListView()
                 .tabItem {
                     Label("Beans", systemImage: "cup.and.saucer.fill")
                 }
+                .environment(coffeeBeanListViewModel)
             
             BeanOfTheDayView(coffeeBean:CoffeeBean.dummy)
                 .tabItem {
