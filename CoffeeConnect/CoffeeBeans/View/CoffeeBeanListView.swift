@@ -11,6 +11,12 @@ struct CoffeeBeanListView: View {
     
     @Environment(CoffeeBeanListViewModel.self) var viewModel
     
+    // Grid layout columns
+    private let gridColumns: [GridItem] = [
+        GridItem(.flexible(), spacing: 16),
+        GridItem(.flexible(), spacing: 16)
+    ]
+    
     var body: some View {
         
         NavigationStack {
@@ -104,8 +110,22 @@ extension CoffeeBeanListView {
         }
         .padding(.top, 8)
     }
+    
     private var gridContentView: some View {
-        Text("Grid content")
+        LazyVGrid(columns: gridColumns, spacing: 16) {
+            
+            ForEach(viewModel.coffeeBeans) { bean in
+                NavigationLink {
+                    CoffeeBeanDetailView(coffeeBean: bean)
+                } label: {
+                    CoffeeBeanGridRowView(coffeeBean: bean)
+                }
+                .buttonStyle(.plain)
+                
+            }
+        }
+        .padding(.horizontal, 16)
+        .padding(.top, 8)
     }
 }
 
