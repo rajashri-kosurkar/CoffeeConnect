@@ -42,20 +42,38 @@ extension OrderFormView {
                 Section(header: Text("Your Details")) {
                     TextField("Enter your name", text: $orderFormViewModel.customerName)
                         .keyboardType(.default)
-                    
+                        .onSubmit {
+                            orderFormViewModel.validateCustomerName()
+                        }
+                    if let nameError = orderFormViewModel.nameError {
+                        Text(nameError).foregroundColor(.red)
+                    }
+                                        
                     TextField("Enter your email", text: $orderFormViewModel.customerEmail)
                         .keyboardType(.emailAddress)
-
+                        .onSubmit {
+                            orderFormViewModel.validateCustomerEmail()
+                        }
+                    if let nameError = orderFormViewModel.emailError {
+                        Text(nameError).foregroundColor(.red)
+                    }
+                    
                 }
                 
                 // Customer Address
                 Section(header: Text("Delivery Address")) {
                     TextField("Enter Delivery Address", text: $orderFormViewModel.deliveryAddress)
                         .keyboardType(.default)
+                        .onSubmit {
+                            orderFormViewModel.validateDeliveryAddress()
+                        }
+                    if let nameError = orderFormViewModel.addressError {
+                        Text(nameError).foregroundColor(.red)
+                    }
                 }
                 
                 // Additional Note
-                Section(header: Text("Additional Note(Optional)")) {
+                Section(header: Text("Additional Note (Optional)")) {
                     TextEditor(text: $orderFormViewModel.specialNote)
                         .frame(height: 80)
                 }
@@ -63,7 +81,7 @@ extension OrderFormView {
                 // Total Cost & Place Order Button
                 Section {
                     HStack {
-                        Text("Total")
+                        Text("Total Cost")
                             .font(.headline)
                         Spacer()
                         Text("\(orderFormViewModel.totalCost)")

@@ -17,6 +17,10 @@ class OrderFormViewModel {
     var specialNote: String = ""
     var quantity: Int = 1
     
+    var nameError: String? = nil
+    var emailError: String? = nil
+    var addressError: String? = nil
+    
     // MARK: Dependencies
     
     let coffeeBean: CoffeeBean
@@ -38,4 +42,26 @@ class OrderFormViewModel {
         let totalValue = costValue * Double(quantity)
         return String(format: "£%.2f", totalValue)
     }
+    
+    // MARK: Validation Helpers
+    
+    func validateCustomerName() {
+        nameError = customerName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        ? "Please enter your full name."
+        : nil
+    }
+    
+    func validateCustomerEmail() {
+        let emailRegex = #"^[A-Z0-9a-z._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}$"#
+        emailError = customerEmail.range(of: emailRegex, options: .regularExpression) == nil
+        ? "Please enter a valid email address."
+        : nil
+    }
+    
+    func validateDeliveryAddress() {
+        addressError = deliveryAddress.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        ? "Please enter a delivery address."
+        : nil
+    }
+    
 }
