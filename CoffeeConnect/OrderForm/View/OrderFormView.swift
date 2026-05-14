@@ -14,7 +14,11 @@ struct OrderFormView: View {
     var body: some View {
         NavigationStack{
             Group {
-                formView
+                if orderFormViewModel.isOrderConfirmed {
+                    OrderConfirmationView(orderFormViewModel: orderFormViewModel)
+                } else {
+                    formView
+                }
             }
             .navigationTitle("Order \(orderFormViewModel.coffeeBean.name)")
             .navigationBarTitleDisplayMode(.inline)
@@ -88,7 +92,10 @@ extension OrderFormView {
                             .font(.headline)
                     }
                     Button {
-                      
+                        Task { [weak orderFormViewModel] in
+                            await orderFormViewModel?.submitCoffeeBeanOrder()
+                            
+                        }
                     } label: {
                         Label("Place Order", systemImage: "checkmark.circle.fill")
                             .labelStyle(.titleAndIcon)

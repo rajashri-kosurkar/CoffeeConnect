@@ -21,6 +21,11 @@ class OrderFormViewModel {
     var emailError: String? = nil
     var addressError: String? = nil
     
+    var orderConfirmation: OrderConfirmation? = nil
+    var isOrderConfirmed: Bool = false
+    var submissionError: String? = nil
+    var isSubmitting: Bool = false
+    
     // MARK: Dependencies
     
     let coffeeBean: CoffeeBean
@@ -62,6 +67,51 @@ class OrderFormViewModel {
         addressError = deliveryAddress.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
         ? "Please enter a delivery address."
         : nil
+    }
+    
+    @discardableResult
+    func validateAll() -> Bool {
+        
+        validateCustomerName()
+        validateCustomerEmail()
+        validateDeliveryAddress()
+        
+        // Returns true only if all errors are nil
+        return nameError == nil && emailError == nil && addressError == nil
+    }
+    
+    func submitCoffeeBeanOrder() async {
+        
+        guard validateAll() else { return }
+        
+        isSubmitting = true
+        
+        defer {
+            isSubmitting = false
+        }
+        
+        do {
+            let order = buildOrder()
+            let confirmation = try await orderService.submitOrder(order)
+            orderConfirmation = confirmation
+            isOrderConfirmed = true
+        } catch {
+            submissionError = error.localizedDescription
+            isOrderConfirmed = false
+        }
+        
+    }
+    
+    // MARK: Private
+    
+    private func buildOrder() -> Order {
+        Order(coffeeBean: coffeeBean,
+              quantity: quantity,
+              customerName: customerName,
+              customerEmail: customerEmail,
+              deliveryAddress: deliveryAddress,
+              specialNote: specialNote)
+        
     }
     
 }
