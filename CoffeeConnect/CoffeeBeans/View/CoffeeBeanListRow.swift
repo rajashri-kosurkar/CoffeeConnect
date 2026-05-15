@@ -82,5 +82,5 @@ struct BOTDBadge: View {
 }
 
 #Preview {
-    CoffeeBeanListRow(coffeeBean: CoffeeBean.dummy)
+    CoffeeBeanListRow(coffeeBean: CoffeeBean.mockBeans[0])
 }

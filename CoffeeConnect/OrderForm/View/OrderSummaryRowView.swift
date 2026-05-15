@@ -65,5 +65,5 @@ extension OrderSummaryRowView {
 }
 
 #Preview {
-    OrderSummaryRowView(coffeeBean: CoffeeBean.dummy)
+    OrderSummaryRowView(coffeeBean: CoffeeBean.mockBeans[0])
 }

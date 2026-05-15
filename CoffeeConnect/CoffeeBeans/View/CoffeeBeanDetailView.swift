@@ -139,6 +139,6 @@ struct DetailView: View {
 
 #Preview {
     NavigationStack {
-        CoffeeBeanDetailView(coffeeBean: CoffeeBean.dummy)
+        CoffeeBeanDetailView(coffeeBean: CoffeeBean.mockBeans[0])
     }
 }

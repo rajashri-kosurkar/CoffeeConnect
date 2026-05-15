@@ -118,6 +118,6 @@ extension OrderFormView {
 }
 
 #Preview {
-    let orderFormViewModel: OrderFormViewModel = OrderFormViewModel(coffeeBean: CoffeeBean.dummy)
+    let orderFormViewModel: OrderFormViewModel = OrderFormViewModel(coffeeBean: CoffeeBean.mockBeans[0])
         OrderFormView(orderFormViewModel: orderFormViewModel)
 }

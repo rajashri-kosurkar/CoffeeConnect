@@ -214,7 +214,7 @@ extension BeanOfTheDayView {
 
 // Preview 1: Bean loaded — primary happy path
 #Preview("Bean Loaded") {
-    BeanOfTheDayView(coffeeBean: CoffeeBean.dummy)
+    BeanOfTheDayView(coffeeBean: CoffeeBean.mockBOTD)
 }
  
 // Preview 2: nil bean — loading/placeholder state

@@ -63,5 +63,5 @@ extension CoffeeBeanGridRowView {
 
 
 #Preview {
-    CoffeeBeanGridRowView(coffeeBean: CoffeeBean.dummy)
+    CoffeeBeanGridRowView(coffeeBean: CoffeeBean.mockBeans[0])
 }
