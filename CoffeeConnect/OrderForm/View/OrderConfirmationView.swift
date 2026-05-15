@@ -72,7 +72,5 @@ extension OrderConfirmationView {
 }
 
 #Preview {
-    let orderFormViewModel: OrderFormViewModel = OrderFormViewModel(coffeeBean: CoffeeBean.mockBeans[0])
-    OrderConfirmationView(orderFormViewModel: orderFormViewModel)
-    
+    OrderConfirmationView(orderFormViewModel: OrderFormViewModel(coffeeBean: CoffeeBean.mockBeans[0], orderService: MockOrderService()))
 }

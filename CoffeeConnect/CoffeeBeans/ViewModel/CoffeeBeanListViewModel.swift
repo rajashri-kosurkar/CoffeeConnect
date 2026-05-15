@@ -30,7 +30,7 @@ final class CoffeeBeanListViewModel {
     var errorMessage: String? = "Failed to load the coffee beans data."
     var layoutStyle: LayoutStyle = .list
     var searchText: String = ""
-
+    
     // MARK: Dependencies
     
     private let beanService: BeanServiceProtocol
@@ -42,7 +42,7 @@ final class CoffeeBeanListViewModel {
     }
     
     // MARK: Helpers
-
+    
     var filteredBeans: [CoffeeBean] {
         guard !searchText.isEmpty else { return coffeeBeans }
         let query = searchText.lowercased()

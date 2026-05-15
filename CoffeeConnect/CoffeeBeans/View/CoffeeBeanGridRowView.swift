@@ -23,7 +23,7 @@ struct CoffeeBeanGridRowView: View {
 extension CoffeeBeanGridRowView {
     
     // MARK: Subviews
-
+    
     private var beanBackgroundImage: some View {
         
         ZStack(alignment: .topTrailing) {
@@ -47,8 +47,8 @@ extension CoffeeBeanGridRowView {
     private var beanDetails: some View {
         VStack(alignment: .leading) {
             Text(coffeeBean.name)
-                    .font(.headline)
-                    .lineLimit(1)
+                .font(.headline)
+                .lineLimit(1)
             Text(coffeeBean.country)
                 .font(.subheadline)
                 .foregroundStyle(.secondary)

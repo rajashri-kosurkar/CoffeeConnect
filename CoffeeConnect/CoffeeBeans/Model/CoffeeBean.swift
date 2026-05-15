@@ -8,32 +8,33 @@
 import Foundation
 
 struct CoffeeBean: Identifiable, Codable {
+    
     let id: String
-       let index: Int
-       let isBOTD: Bool
-       let cost: String
-       let imageURL: String
-       let colour: String
-       let name: String
-       let description: String
-       let country: String
-
-       enum CodingKeys: String, CodingKey {
-           case id = "_id"
-           case index
-           case isBOTD
-           case cost = "Cost"
-           case imageURL = "Image"
-           case colour
-           case name = "Name"
-           case description = "Description"
-           case country = "Country"
-       }
-       
+    let index: Int
+    let isBOTD: Bool
+    let cost: String
+    let imageURL: String
+    let colour: String
+    let name: String
+    let description: String
+    let country: String
+    
+    enum CodingKeys: String, CodingKey {
+        case id = "_id"
+        case index
+        case isBOTD
+        case cost = "Cost"
+        case imageURL = "Image"
+        case colour
+        case name = "Name"
+        case description = "Description"
+        case country = "Country"
+    }
+    
     var costValue: Double? {
         return Double(cost.replacingOccurrences(of: "£", with: ""))
     }
-
+    
 }
 
 extension CoffeeBean {
@@ -75,5 +76,5 @@ extension CoffeeBean {
     ]
     
     static let mockBOTD: CoffeeBean = mockBeans.first(where: { $0.isBOTD }) ?? mockBeans[0]
-
+    
 }

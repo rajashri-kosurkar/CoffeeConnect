@@ -62,7 +62,7 @@ extension BeanOfTheDayView {
     }
     
     // MARK: Image with Overlay Text
-
+    
     private func beanBackgroundImageWithData(bean: CoffeeBean) -> some View {
         ZStack(alignment: .bottomLeading) {
             // Async image — loads from URL

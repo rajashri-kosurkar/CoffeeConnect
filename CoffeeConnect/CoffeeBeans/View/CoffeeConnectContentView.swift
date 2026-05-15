@@ -20,7 +20,7 @@ struct CoffeeConnectContentView: View {
                 }
                 .environment(coffeeBeanListViewModel)
             
-            BeanOfTheDayView(coffeeBean:CoffeeBean.dummy)
+            BeanOfTheDayView(coffeeBean:CoffeeBean.mockBeans[0])
                 .tabItem {
                     Label("Bean of the Day", systemImage: "star.fill")
                 }

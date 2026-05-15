@@ -132,7 +132,7 @@ struct DetailView: View {
                         .font(.footnote)
                         .foregroundColor(.secondary)
                 }
-               
+                
             }
     }
 }

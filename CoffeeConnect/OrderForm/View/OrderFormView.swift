@@ -37,87 +37,86 @@ struct OrderFormView: View {
 extension OrderFormView {
     
     // MARK: - Form
-
-        private var formView: some View {
-            Form {
+    
+    private var formView: some View {
+        Form {
+            
+            // Coffee Bean Summary
+            OrderSummaryRowView(coffeeBean: orderFormViewModel.coffeeBean)
+            
+            // Quantity Detail
+            Section("Quantity Detail") {
+                Stepper("Quantity: \(orderFormViewModel.quantity)", value: $orderFormViewModel.quantity, in: 1...99)
                 
-                // Coffee Bean Summary
-                OrderSummaryRowView(coffeeBean: orderFormViewModel.coffeeBean)
-                
-                // Quantity Detail
-                Section("Quantity Detail") {
-                    Stepper("Quantity: \(orderFormViewModel.quantity)", value: $orderFormViewModel.quantity, in: 1...99)
-
+            }
+            
+            // Customer Details
+            Section(header: Text("Your Details")) {
+                TextField("Enter your name", text: $orderFormViewModel.customerName)
+                    .keyboardType(.default)
+                    .onSubmit {
+                        orderFormViewModel.validateCustomerName()
+                    }
+                if let nameError = orderFormViewModel.nameError {
+                    Text(nameError).foregroundColor(.red)
                 }
                 
-                // Customer Details
-                Section(header: Text("Your Details")) {
-                    TextField("Enter your name", text: $orderFormViewModel.customerName)
-                        .keyboardType(.default)
-                        .onSubmit {
-                            orderFormViewModel.validateCustomerName()
-                        }
-                    if let nameError = orderFormViewModel.nameError {
-                        Text(nameError).foregroundColor(.red)
+                TextField("Enter your email", text: $orderFormViewModel.customerEmail)
+                    .keyboardType(.emailAddress)
+                    .onSubmit {
+                        orderFormViewModel.validateCustomerEmail()
                     }
-                                        
-                    TextField("Enter your email", text: $orderFormViewModel.customerEmail)
-                        .keyboardType(.emailAddress)
-                        .onSubmit {
-                            orderFormViewModel.validateCustomerEmail()
-                        }
-                    if let nameError = orderFormViewModel.emailError {
-                        Text(nameError).foregroundColor(.red)
-                    }
-                    
+                if let nameError = orderFormViewModel.emailError {
+                    Text(nameError).foregroundColor(.red)
                 }
                 
-                // Customer Address
-                Section(header: Text("Delivery Address")) {
-                    TextField("Enter Delivery Address", text: $orderFormViewModel.deliveryAddress)
-                        .keyboardType(.default)
-                        .onSubmit {
-                            orderFormViewModel.validateDeliveryAddress()
-                        }
-                    if let nameError = orderFormViewModel.addressError {
-                        Text(nameError).foregroundColor(.red)
+            }
+            
+            // Customer Address
+            Section(header: Text("Delivery Address")) {
+                TextField("Enter Delivery Address", text: $orderFormViewModel.deliveryAddress)
+                    .keyboardType(.default)
+                    .onSubmit {
+                        orderFormViewModel.validateDeliveryAddress()
                     }
-                }
-                
-                // Additional Note
-                Section(header: Text("Additional Note (Optional)")) {
-                    TextEditor(text: $orderFormViewModel.specialNote)
-                        .frame(height: 80)
-                }
-
-                // Total Cost & Place Order Button
-                Section {
-                    HStack {
-                        Text("Total Cost")
-                            .font(.headline)
-                        Spacer()
-                        Text("\(orderFormViewModel.totalCost)")
-                            .font(.headline)
-                    }
-                    Button {
-                        Task { [weak orderFormViewModel] in
-                            await orderFormViewModel?.submitCoffeeBeanOrder()
-                            
-                        }
-                    } label: {
-                        Label("Place Order", systemImage: "checkmark.circle.fill")
-                            .labelStyle(.titleAndIcon)
-                            .frame(maxWidth: .infinity)
-                            .frame(height: 55)
-                            .font(.headline.bold())
-                    }
-                    .buttonStyle(.borderedProminent)
+                if let nameError = orderFormViewModel.addressError {
+                    Text(nameError).foregroundColor(.red)
                 }
             }
+            
+            // Additional Note
+            Section(header: Text("Additional Note (Optional)")) {
+                TextEditor(text: $orderFormViewModel.specialNote)
+                    .frame(height: 80)
+            }
+            
+            // Total Cost & Place Order Button
+            Section {
+                HStack {
+                    Text("Total Cost")
+                        .font(.headline)
+                    Spacer()
+                    Text("\(orderFormViewModel.totalCost)")
+                        .font(.headline)
+                }
+                Button {
+                    Task { [weak orderFormViewModel] in
+                        await orderFormViewModel?.submitCoffeeBeanOrder()
+                        
+                    }
+                } label: {
+                    Label("Place Order", systemImage: "checkmark.circle.fill")
+                        .labelStyle(.titleAndIcon)
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 55)
+                        .font(.headline.bold())
+                }
+                .buttonStyle(.borderedProminent)
+            }
         }
+    }
 }
 
 #Preview {
-    let orderFormViewModel: OrderFormViewModel = OrderFormViewModel(coffeeBean: CoffeeBean.mockBeans[0])
-        OrderFormView(orderFormViewModel: orderFormViewModel)
+    OrderFormView(orderFormViewModel: OrderFormViewModel(coffeeBean: CoffeeBean.mockBeans[0], orderService: MockOrderService()))
 }

@@ -141,12 +141,11 @@ extension CoffeeBeanListView {
     }
     
     private var emptyStateView: some View {
-            ContentUnavailableView.search(text: viewModel.searchText)
-        }
+        ContentUnavailableView.search(text: viewModel.searchText)
+    }
 }
 
 #Preview {
-    //    CoffeeBeanListView(viewModel: CoffeeBeanListViewModel(beanService: LocalBeanService()))
     let vm = CoffeeBeanListViewModel(beanService: MockBeanService())
     Task { [weak vm] in await vm?.loadBeans() }
     return CoffeeBeanListView().environment(vm)
