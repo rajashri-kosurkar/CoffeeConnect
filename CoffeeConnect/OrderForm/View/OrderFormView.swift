@@ -10,6 +10,7 @@ import SwiftUI
 struct OrderFormView: View {
     
     @Bindable var orderFormViewModel: OrderFormViewModel
+    @Environment(\.dismiss) private var dismiss
     
     var body: some View {
         NavigationStack{
@@ -22,6 +23,13 @@ struct OrderFormView: View {
             }
             .navigationTitle("Order \(orderFormViewModel.coffeeBean.name)")
             .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    if !orderFormViewModel.isOrderConfirmed {
+                        Button("Cancel") { dismiss() }
+                    }
+                }
+            }
         }
     }
 }
