@@ -19,6 +19,8 @@ struct CoffeeBeanListView: View {
     
     var body: some View {
         
+        @Bindable var viewModel = viewModel
+        
         NavigationStack {
             
             Group {
@@ -35,6 +37,11 @@ struct CoffeeBeanListView: View {
                     toggleButton
                 }
             }
+            .searchable(
+                text: $viewModel.searchText,
+                placement: .navigationBarDrawer(displayMode: .always),
+                prompt: "Search by name, country, colour, cost"
+            )
             .navigationTitle("All The Beans")
             
         }
@@ -84,20 +91,25 @@ extension CoffeeBeanListView {
     
     private var beanContentView: some View {
         Group {
-            ScrollView {
-                if viewModel.layoutStyle == .list {
-                    listContentView
-                } else {
-                    gridContentView
+            if viewModel.filteredBeans.isEmpty {
+                emptyStateView
+            } else {
+                ScrollView {
+                    if viewModel.layoutStyle == .list {
+                        listContentView
+                    } else {
+                        gridContentView
+                    }
                 }
             }
+            
         }
     }
     
     private var listContentView: some View {
         
         LazyVStack(spacing: 10) {
-            ForEach(viewModel.coffeeBeans) { bean in
+            ForEach(viewModel.filteredBeans) { bean in
                 NavigationLink {
                     CoffeeBeanDetailView(coffeeBean: bean)
                 } label: {
@@ -114,7 +126,7 @@ extension CoffeeBeanListView {
     private var gridContentView: some View {
         LazyVGrid(columns: gridColumns, spacing: 16) {
             
-            ForEach(viewModel.coffeeBeans) { bean in
+            ForEach(viewModel.filteredBeans) { bean in
                 NavigationLink {
                     CoffeeBeanDetailView(coffeeBean: bean)
                 } label: {
@@ -127,6 +139,10 @@ extension CoffeeBeanListView {
         .padding(.horizontal, 16)
         .padding(.top, 8)
     }
+    
+    private var emptyStateView: some View {
+            ContentUnavailableView.search(text: viewModel.searchText)
+        }
 }
 
 #Preview {

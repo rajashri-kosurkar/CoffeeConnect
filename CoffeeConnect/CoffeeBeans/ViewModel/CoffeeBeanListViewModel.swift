@@ -21,6 +21,7 @@ enum LayoutStyle {
     }
 }
 
+@MainActor
 @Observable
 final class CoffeeBeanListViewModel {
     
@@ -28,7 +29,8 @@ final class CoffeeBeanListViewModel {
     var isLoading: Bool = true
     var errorMessage: String? = "Failed to load the coffee beans data."
     var layoutStyle: LayoutStyle = .list
-    
+    var searchText: String = ""
+
     // MARK: Dependencies
     
     private let beanService: BeanServiceProtocol
@@ -37,6 +39,20 @@ final class CoffeeBeanListViewModel {
     
     init(beanService: BeanServiceProtocol = LocalBeanService()) {
         self.beanService = beanService
+    }
+    
+    // MARK: Helpers
+
+    var filteredBeans: [CoffeeBean] {
+        guard !searchText.isEmpty else { return coffeeBeans }
+        let query = searchText.lowercased()
+        return coffeeBeans.filter { coffeeBeans in
+            coffeeBeans.name.lowercased().contains(query) ||
+            coffeeBeans.country.lowercased().contains(query) ||
+            coffeeBeans.colour.lowercased().contains(query) ||
+            coffeeBeans.description.lowercased().contains(query) ||
+            coffeeBeans.cost.lowercased().contains(query)
+        }
     }
     
     // MARK: Actions
